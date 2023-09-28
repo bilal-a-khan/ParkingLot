@@ -1,22 +1,25 @@
 package com.example.parkinglot;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class ParkingLotApp extends Application {
 
-    private ParkingLot parkingLot = new ParkingLot();
+   // private ParkingLotFactory = new ParkingLotFactory();
+    private IParkingLot parkingLot = new ParkingLot();
+    private ParkingLotView view;
+    private ParkingLotController controller;
 
     @Override
     public void start(Stage stage) throws IOException {
 
-        ParkingLotView view = new ParkingLotView(parkingLot);
+        view = new ParkingLotView(parkingLot);
         view.initializeLayout(stage);
+
+        controller = new ParkingLotController(parkingLot,view);
 
     }
 

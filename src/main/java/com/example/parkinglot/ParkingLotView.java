@@ -13,10 +13,11 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ParkingLotView {
 
-    private ParkingLot parkingLot;
+    private IParkingLot parkingLot;
 
     private Text appInfo;
 
@@ -38,13 +39,37 @@ public class ParkingLotView {
     private Label hourLabel2;
     private Label minuteLabel2;
 
-    private Button getFeeButton;
+    private Button feeButton;
 
     private Label feeLabel;
 
-    public ParkingLotView(ParkingLot parkingLot) {
+    public ParkingLotView(IParkingLot parkingLot) {
         this.parkingLot = parkingLot;
         initializeUIElements();
+    }
+
+    public LocalDateTime getEntryDateTime() {
+        String dateString = entryDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String timeString = " " + entryHourTextField.getText().trim() + ":" + entryMinuteTextField.getText().trim();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
+
+        return LocalDateTime.parse(dateString + timeString, formatter);
+    }
+
+    public LocalDateTime getExitDateTime() {
+        String dateString = exitDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String timeString = " " + exitHourTextField.getText().trim() + ":" + exitMinuteTextField.getText().trim();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:m");
+
+        return LocalDateTime.parse(dateString + timeString, formatter);
+    }
+
+    public void displayFee(String result) {
+        feeLabel.setText(result);
+    }
+
+    public Button getFeeButton() {
+        return feeButton;
     }
 
     private void initializeUIElements() {
@@ -70,7 +95,7 @@ public class ParkingLotView {
         hourLabel2 = new Label("Hour (0-23)");
         minuteLabel2 = new Label("Minute (0-59)");
 
-        getFeeButton = new Button("Get Fee");
+        feeButton = new Button("Get Fee");
 
         feeLabel = new Label();
 
@@ -79,17 +104,17 @@ public class ParkingLotView {
     public void initializeLayout(Stage stage) {
         //Set up layout
 
-        HBox entryDateHBox = new HBox(10, entryDateLabel,entryDatePicker);
-        VBox entryHourVBox = new VBox(10,hourLabel1, entryHourTextField);
-        VBox entryMinuteVBox = new VBox(10,minuteLabel1, entryMinuteTextField);
-        HBox entryTimeHBox = new HBox(10, entryTimeLabel,entryHourVBox,entryMinuteVBox);
+        HBox entryDateHBox = new HBox(10, entryDateLabel, entryDatePicker);
+        VBox entryHourVBox = new VBox(10, hourLabel1, entryHourTextField);
+        VBox entryMinuteVBox = new VBox(10, minuteLabel1, entryMinuteTextField);
+        HBox entryTimeHBox = new HBox(10, entryTimeLabel, entryHourVBox, entryMinuteVBox);
 
-        HBox exitDateHBox = new HBox(10, exitDateLabel,exitDatePicker);
-        VBox exitHourVBox = new VBox(10,hourLabel2, exitHourTextField);
-        VBox exitMinuteVBox = new VBox(10,minuteLabel2, exitMinuteTextField);
-        HBox exitTimeHBox = new HBox(10, exitTimeLabel,exitHourVBox,exitMinuteVBox);
+        HBox exitDateHBox = new HBox(10, exitDateLabel, exitDatePicker);
+        VBox exitHourVBox = new VBox(10, hourLabel2, exitHourTextField);
+        VBox exitMinuteVBox = new VBox(10, minuteLabel2, exitMinuteTextField);
+        HBox exitTimeHBox = new HBox(10, exitTimeLabel, exitHourVBox, exitMinuteVBox);
 
-        VBox vBox = new VBox(10, appInfo,entryDateHBox,entryTimeHBox,exitDateHBox,exitTimeHBox,getFeeButton,feeLabel);
+        VBox vBox = new VBox(10, appInfo, entryDateHBox, entryTimeHBox, exitDateHBox, exitTimeHBox, feeButton, feeLabel);
         vBox.setAlignment(Pos.TOP_LEFT);
         Scene scene = new Scene(vBox, 550, 400);
         stage.setTitle("Parking Lot Application");

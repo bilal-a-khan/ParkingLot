@@ -1,20 +1,23 @@
 package com.example.parkinglot;
 
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
 
-public class ParkingLot {
+public class ParkingLot implements IParkingLot {
 
-    public long getFee(long[] duration) {
+    @Override
+    public String calculateFee(LocalDateTime entryDateTime, LocalDateTime exitDateTime) {
 
-        long parkingFee;
-        long hourFee;
-        long dayFee;
+        Ticket ticket = new Ticket();
+
+        long[] duration = ticket.getDuration(entryDateTime, exitDateTime);
 
         long stayDays = duration[0];
         long stayHours = duration[1];
         long stayMinutes = duration[2];
+
+        long parkingFee;
+        long hourFee;
+        long dayFee;
 
         if (stayDays == 0 && stayHours == 0 && stayMinutes < 30) {
             parkingFee = 0;
@@ -30,6 +33,11 @@ public class ParkingLot {
             }
             parkingFee = dayFee + hourFee;
         }
-        return parkingFee;
+
+        if (parkingFee < 0) {
+            return "Entry date/time is after Exit date/time. Please check and try again";
+        } else {
+            return "$" + parkingFee;
+        }
     }
 }
