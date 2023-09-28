@@ -8,8 +8,7 @@ import java.io.IOException;
 
 public class ParkingLotApp extends Application {
 
-   // private ParkingLotFactory = new ParkingLotFactory();
-    private IParkingLot parkingLot = new ParkingLot();
+    private IParkingLot parkingLot = new ParkingLotDefault();
     private ParkingLotView view;
     private ParkingLotController controller;
 
@@ -20,7 +19,6 @@ public class ParkingLotApp extends Application {
         view.initializeLayout(stage);
 
         controller = new ParkingLotController(parkingLot,view);
-
     }
 
     public static void main(String[] args) {

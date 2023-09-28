@@ -2,7 +2,7 @@ package com.example.parkinglot;
 
 import java.time.LocalDateTime;
 
-public class ParkingLot implements IParkingLot {
+public class ParkingLotDefault implements IParkingLot {
 
     @Override
     public String calculateFee(LocalDateTime entryDateTime, LocalDateTime exitDateTime) {

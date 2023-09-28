@@ -2,12 +2,12 @@ package com.example.parkinglot;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -42,6 +42,13 @@ public class ParkingLotView {
     private Button feeButton;
 
     private Label feeLabel;
+
+    private RadioButton defaultLotRadio;
+    private RadioButton dailyLotRadio;
+    private RadioButton longTermLotRadio;
+    private ToggleGroup lotToggleGroup;
+
+    private Text lotInfo;
 
     public ParkingLotView(IParkingLot parkingLot) {
         this.parkingLot = parkingLot;
@@ -98,6 +105,26 @@ public class ParkingLotView {
         feeButton = new Button("Get Fee");
 
         feeLabel = new Label();
+        feeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+
+        lotInfo = new Text("""
+                Select a rate structure:
+                
+                - Default: 30 minutes free otherwise $2 per hour. Max daily charge of $15.
+                                     Fee is rounded up to nearest hourly rate.
+                
+                - Daily: Ideal for short term full day parking. Flat rate of $12 per day.
+                
+                - Long Term: $8 per day with minimum charge of $40. Select if parking for 5 days or more.""");
+
+        defaultLotRadio = new RadioButton("Default Rate");
+        dailyLotRadio = new RadioButton("Daily Rate");
+        longTermLotRadio = new RadioButton("Long Term Rate");
+        lotToggleGroup = new ToggleGroup();
+        defaultLotRadio.setToggleGroup(lotToggleGroup);
+        dailyLotRadio.setToggleGroup(lotToggleGroup);
+        longTermLotRadio.setToggleGroup(lotToggleGroup);
+        defaultLotRadio.setSelected(true);
 
     }
 
@@ -114,13 +141,31 @@ public class ParkingLotView {
         VBox exitMinuteVBox = new VBox(10, minuteLabel2, exitMinuteTextField);
         HBox exitTimeHBox = new HBox(10, exitTimeLabel, exitHourVBox, exitMinuteVBox);
 
-        VBox vBox = new VBox(10, appInfo, entryDateHBox, entryTimeHBox, exitDateHBox, exitTimeHBox, feeButton, feeLabel);
+        HBox lotTogglesHBox = new HBox(10, defaultLotRadio, dailyLotRadio, longTermLotRadio);
+
+        AnchorPane ap = new AnchorPane();
+
+        VBox vBox = new VBox(10, appInfo, entryDateHBox, entryTimeHBox, exitDateHBox, exitTimeHBox, lotInfo, lotTogglesHBox, feeButton, feeLabel);
         vBox.setAlignment(Pos.TOP_LEFT);
-        Scene scene = new Scene(vBox, 550, 400);
+
+        AnchorPane.setLeftAnchor(vBox, 10.0);
+        AnchorPane.setTopAnchor(vBox, 10.0);
+        ap.getChildren().add(vBox);
+
+        Scene scene = new Scene(ap, 510, 505);
         stage.setTitle("Parking Lot Application");
         stage.setScene(scene);
         stage.show();
     }
 
 
+    public int getLotToggleOption() {
+        if (dailyLotRadio.isSelected()) {
+            return 1;
+        } else if (longTermLotRadio.isSelected()) {
+            return 2;
+        } else {
+            return 0;
+        }
+    }
 }
