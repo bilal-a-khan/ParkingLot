@@ -2,7 +2,7 @@ package com.example.parkinglot;
 
 import java.time.LocalDateTime;
 
-public interface IParkingLot {
+public interface ParkingLot {
 
     String calculateFee(LocalDateTime entryDateTime, LocalDateTime exitDateTime);
 

@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ParkingLotView {
 
-    private IParkingLot parkingLot;
+    private ParkingLot parkingLot;
 
     private Text appInfo;
 
@@ -50,7 +50,7 @@ public class ParkingLotView {
 
     private Text lotInfo;
 
-    public ParkingLotView(IParkingLot parkingLot) {
+    public ParkingLotView(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
         initializeUIElements();
     }

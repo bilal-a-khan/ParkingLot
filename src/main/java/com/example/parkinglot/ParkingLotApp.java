@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class ParkingLotApp extends Application {
 
-    private IParkingLot parkingLot = new ParkingLotDefault();
+    private ParkingLot parkingLot = new ParkingLotDefault();
     private ParkingLotView view;
     private ParkingLotController controller;
 

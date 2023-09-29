@@ -1,10 +1,8 @@
 package com.example.parkinglot;
 
-import javafx.stage.Stage;
-
 public class ParkingLotFactory {
 
-    public IParkingLot createParkingLot(int option) {
+    public static ParkingLot createParkingLot(int option) {
 
         switch (option) {
             case 1 -> {
