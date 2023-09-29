@@ -17,8 +17,6 @@ import java.time.format.DateTimeFormatter;
 
 public class ParkingLotView {
 
-    private ParkingLot parkingLot;
-
     private Text appInfo;
 
     private Label entryDateLabel;
@@ -46,12 +44,10 @@ public class ParkingLotView {
     private RadioButton defaultLotRadio;
     private RadioButton dailyLotRadio;
     private RadioButton longTermLotRadio;
-    private ToggleGroup lotToggleGroup;
 
     private Text lotInfo;
 
-    public ParkingLotView(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+    public ParkingLotView() {
         initializeUIElements();
     }
 
@@ -120,7 +116,7 @@ public class ParkingLotView {
         defaultLotRadio = new RadioButton("Default Rate");
         dailyLotRadio = new RadioButton("Daily Rate");
         longTermLotRadio = new RadioButton("Long Term Rate");
-        lotToggleGroup = new ToggleGroup();
+        ToggleGroup lotToggleGroup = new ToggleGroup();
         defaultLotRadio.setToggleGroup(lotToggleGroup);
         dailyLotRadio.setToggleGroup(lotToggleGroup);
         longTermLotRadio.setToggleGroup(lotToggleGroup);

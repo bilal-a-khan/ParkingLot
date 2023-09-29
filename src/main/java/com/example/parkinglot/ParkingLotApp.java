@@ -15,7 +15,7 @@ public class ParkingLotApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        view = new ParkingLotView(parkingLot);
+        view = new ParkingLotView();
         view.initializeLayout(stage);
 
         controller = new ParkingLotController(parkingLot,view);
