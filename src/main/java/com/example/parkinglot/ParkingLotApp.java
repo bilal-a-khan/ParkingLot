@@ -9,16 +9,14 @@ import java.io.IOException;
 public class ParkingLotApp extends Application {
 
     private ParkingLot parkingLot = new ParkingLotDefault();
-    private ParkingLotView view;
-    private ParkingLotController controller;
 
     @Override
     public void start(Stage stage) throws IOException {
 
-        view = new ParkingLotView();
+        ParkingLotView view = new ParkingLotView();
         view.initializeLayout(stage);
 
-        controller = new ParkingLotController(parkingLot,view);
+        new ParkingLotController(parkingLot, view);
     }
 
     public static void main(String[] args) {
